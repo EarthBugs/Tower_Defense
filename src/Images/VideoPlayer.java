@@ -5,6 +5,7 @@ package Images;/*
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,11 +18,17 @@ public class VideoPlayer extends Thread
 	private Graphics g;//画笔
 	private String imageURL;//序列帧路径
 	
-	public VideoPlayer(Point position, float roteAngle, Graphics g, String imageURL)//构造函数
+	/*public VideoPlayer(Point position, float roteAngle, Graphics g, String imageURL)//构造函数
 	{
 		this.position = position;
 		this.roteAngle = roteAngle;
 		this.imageURL = imageURL;
+		this.g = g;
+	}*/
+	
+	public VideoPlayer(Point position,Graphics g)//构造函数
+	{
+		this.position = position;
 		this.g = g;
 	}
 	
@@ -34,18 +41,17 @@ public class VideoPlayer extends Thread
 		{
 			try
 			{
-				this.sleep(16);//每16毫秒刷新一次，60FPS
-				
 				System.out.println(thisFrame);
-				System.out.println(imageURL + "Lightning_" + thisFrame + ".png");
+				System.out.println("src\\Images\\Effects\\Lightning\\Lightning_" + thisFrame + ".png");
 				
-				image = ImageIO.read(new File(imageURL + "Lightning_" + thisFrame + ".png"));//读图片
-				g.drawImage(image, 0, 0, 100, 100, null);
-				thisFrame++;
+				BufferedImage image = ImageIO.read(new File("src\\Images\\Effects\\Lightning\\Lightning_" + thisFrame + ".png"));//读图片
+				g.drawImage(image, 0, 0, null);
+				thisFrame+=2;
+				
 				if(thisFrame == 60)
 					break;
 			}
-			catch(InterruptedException | IOException e)
+			catch(IOException e)
 			{
 				e.printStackTrace();
 			}

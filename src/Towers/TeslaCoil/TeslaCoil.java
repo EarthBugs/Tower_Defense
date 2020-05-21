@@ -11,6 +11,6 @@ public class TeslaCoil extends Tower
 {
 	public TeslaCoil() throws IOException
 	{
-		super("src\\Images\\TeslaCoil.png");
+		super("src\\Images\\TeslaCoil\\TeslaCoil.png");
 	}
 }

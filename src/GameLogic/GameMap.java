@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class GameMap extends JPanel
 {
-	int thisFrame;
+	boolean flag = true;
 	TeslaCoil teslaCoil;
 	
 	GameMap() throws IOException//构造函数
@@ -34,18 +34,15 @@ public class GameMap extends JPanel
 		{
 			teslaCoil.paint(g);
 			
-			//Thread.sleep(16);//每16毫秒刷新一次，60FPS
+			if(flag)
+			{
+				new VideoPlayer(new Point(10, 10), g).run();
+				flag = false;
+			}
 			
-			
-			//这段代码应该写在VedioPlayer里
-			System.out.println(thisFrame);
-			System.out.println("src\\Images\\Lightning\\Lightning_" + thisFrame + ".png");
-			
-			BufferedImage image = ImageIO.read(new File("src\\Images\\Lightning\\Lightning_" + thisFrame + ".png"));//读图片
-			g.drawImage(image, 0, 0, null);
-			thisFrame+=2;
+			Thread.sleep(16);//每16毫秒刷新一次，60FPS
 		}
-		catch(IOException e)
+		catch(InterruptedException e)
 		{
 			e.printStackTrace();
 		}
