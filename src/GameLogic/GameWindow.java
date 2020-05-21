@@ -19,12 +19,16 @@ public class GameWindow extends JFrame
 		GameMap gameMap = new GameMap();//创建游戏地图
 		this.add(gameMap);//向窗口中添加地图面板
 		
+		GameEffects gameEffects = new GameEffects();//创建效果面板
+		this.add(gameEffects);//向窗口中添加效果面板
+		
 		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
 		
 		while(true)
 		{
-			Thread.sleep(32);//每32毫秒刷新，30FPS
+			Thread.sleep(16);//每16毫秒刷新，60FPS
 			gameMap.repaint();//调用JPanel的重绘
+			gameEffects.repaint();//调用JPanel的重绘
 		}
 	}
 }

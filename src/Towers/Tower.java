@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class Tower
 {
+	private int index;//塔的序号
 	private Point position;//位置
 	private int size;//占地面积
 	private int price;//价格

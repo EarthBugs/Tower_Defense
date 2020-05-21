@@ -4,20 +4,15 @@ package GameLogic;/*
     游戏地图
 */
 
-import Images.VideoPlayer;
 import Towers.TeslaCoil.TeslaCoil;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class GameMap extends JPanel
 {
-	boolean flag = true;
-	TeslaCoil teslaCoil;
+	private TeslaCoil teslaCoil;
 	
 	GameMap() throws IOException//构造函数
 	{
@@ -33,12 +28,6 @@ public class GameMap extends JPanel
 		try
 		{
 			teslaCoil.paint(g);
-			
-			if(flag)
-			{
-				new VideoPlayer(new Point(10, 10), g).run();
-				flag = false;
-			}
 			
 			Thread.sleep(16);//每16毫秒刷新一次，60FPS
 		}
