@@ -17,7 +17,7 @@ public class GameMap extends JPanel
 	GameMap() throws IOException//构造函数
 	{
 		this.setBackground(new Color(205, 196, 201));
-		teslaCoil = new TeslaCoil();
+		teslaCoil = new TeslaCoil(new Point(100, 100));
 	}
 	
 	@Override

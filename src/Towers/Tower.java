@@ -19,13 +19,14 @@ public class Tower
 	private boolean isActivated;//是否启用
 	Image image;//塔图标
 	
-	protected Tower(String imageURL)throws IOException//构造函数
+	protected Tower(Point position, String imageURL)throws IOException//构造函数
 	{
+		this.position = position;//获取坐标
 		image = ImageIO.read(new File(imageURL));//载入图片
 	}
 	
 	public void paint(Graphics g)
 	{
-		g.drawImage(image, 64, 32, 512, 512, null);
+		g.drawImage(image, position.x, position.y, 512, 512, null);
 	}
 }

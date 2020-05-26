@@ -23,7 +23,7 @@ public class GameWindow extends JFrame
 		
 		while(true)
 		{
-			Thread.sleep(16);//每16毫秒刷新，60FPS
+			wait(16);//每16毫秒刷新，60FPS
 			gameMap.repaint();//调用JPanel的重绘
 		}
 	}

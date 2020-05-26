@@ -5,12 +5,13 @@ package Towers.TeslaCoil;/*
 
 import Towers.Tower;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class TeslaCoil extends Tower
 {
-	public TeslaCoil() throws IOException
+	public TeslaCoil(Point position) throws IOException
 	{
-		super("src\\Images\\TeslaCoil\\TeslaCoil.png");
+		super(position, "src\\Images\\TeslaCoil\\TeslaCoil.png");
 	}
 }
