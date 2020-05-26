@@ -2,6 +2,7 @@ package GameLogic;/*
     @Auther TknHJQ
     @Create date 2020/5/21 - 20:48
     计划用于绘制攻击效果，因工期紧搁置
+    BUG：设置透明背景不成功，若添加到JFrame中，则会遮挡GameMap层的内容
 */
 
 import Images.VideoPlayer.imagePainter;
