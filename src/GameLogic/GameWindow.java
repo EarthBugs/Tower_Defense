@@ -5,6 +5,7 @@ package GameLogic;/*
 */
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class GameWindow extends JFrame
@@ -16,7 +17,7 @@ public class GameWindow extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭方式
 		this.setSize(1024, 576);//设置窗口尺寸（像素）
 		
-		GameMap gameMap = new GameMap();//创建游戏地图
+		GameMap gameMap = new GameMap(10, 10);//创建游戏地图
 		this.add(gameMap);//向窗口中添加地图面板
 		
 		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
