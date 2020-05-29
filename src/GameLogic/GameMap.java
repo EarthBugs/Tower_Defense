@@ -17,6 +17,8 @@ public class GameMap extends JPanel
 	private int mapWidth;
 	private int mapHeight;
 	
+	private Point[] wayPoint;//敌人单位的移动路径点
+	
 	private TeslaCoil teslaCoil;
 	private RhinoHeavyTank rhinoHeavyTank;
 	
@@ -25,8 +27,13 @@ public class GameMap extends JPanel
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 		
-		this.setLocation(-100, -100);
 		this.setBackground(new Color(205, 196, 201));
+		
+		//初始化路径点。32+64*n即第n行/列的行/列中心，地图共16列9行。当前地图形状：
+		//┏━┛
+		//┗━━━
+		wayPoint = new Point[]{new Point(1024, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point()};
+		
 		teslaCoil = new TeslaCoil(new Point(100, 100));
 		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0));
 	}
@@ -38,9 +45,6 @@ public class GameMap extends JPanel
 		
 		teslaCoil.paint(g);
 		rhinoHeavyTank.paint(g);
-		
-		g.setColor(Color.red);
-		g.fillRect(0, 0, 1000, 1000);
 		
 		try
 		{
