@@ -16,11 +16,11 @@ public class Enemy
 	private int hp;//生命值
 	private int firePower;//火力
 	private char type;//敌人类型，G陆军，A空军
-	private String armor;//装甲类型，Infantry步兵，LTank轻型坦克，HTank重型坦克，Fighter战斗机，Bomber轰炸机
+	private char armor;//装甲类型，I(Infantry)步兵，L(LightTank)轻型坦克，H(HeavyTank)重型坦克，F(Fighter)战斗机，B(Bomber)轰炸机
 	private Image image;//图像
 	private EnemyController enemyController;//该敌人对象的控制器，控制敌人移动
 	
-	public Enemy(Point position, float velocity, int hp, int firePower, char type, String armor, String imageURL) throws IOException
+	public Enemy(Point position, float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
 	{
 		index++;//序号自加
 		this.position = position;

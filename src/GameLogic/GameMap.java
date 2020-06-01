@@ -32,7 +32,7 @@ public class GameMap extends JPanel
 		//初始化路径点。32+64*n即第n行/列的行/列中心，地图共16列9行。当前地图形状：
 		//┏━┛
 		//┗━━━
-		wayPoint = new Point[]{new Point(1024, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point()};
+		wayPoint = new Point[]{new Point(1280, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 3), new Point(32 + 64 * 10, 32 + 64 * 3), new Point(30 +64 * 10, -128)};
 		
 		teslaCoil = new TeslaCoil(new Point(100, 100));
 		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0));
@@ -45,16 +45,5 @@ public class GameMap extends JPanel
 		
 		teslaCoil.paint(g);
 		rhinoHeavyTank.paint(g);
-		
-		try
-		{
-			synchronized(this)
-			{
-				wait(16);//每16毫秒刷新，60FPS
-			}
-		}catch(InterruptedException e)
-		{
-			e.printStackTrace();
-		}
 	}
 }

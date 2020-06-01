@@ -10,8 +10,9 @@ import java.io.IOException;
 public class GameWindow extends JFrame implements Runnable
 {
 	private JPanel gameMap;
+	private int victoryOrDefeat;//胜负，0为游戏正在进行，1为胜利，2为失败
 	
-	GameWindow() throws InterruptedException, IOException
+	GameWindow() throws IOException
 	{
 		this.setTitle("红警塔防-Author@地球虫子");//窗口标题
 		this.setResizable(false);//窗口不支持缩放
@@ -30,7 +31,27 @@ public class GameWindow extends JFrame implements Runnable
 	{
 		while(true)
 		{
+			if(victoryOrDefeat != 0)//胜负判定
+			{
+				if(victoryOrDefeat == 1)
+					gameMap.add(new JLabel("YOU WIN!!!"));
+				if(victoryOrDefeat == 2)
+					gameMap.add(new JLabel("YOU HAVE BEEN DEFEATED!!!"));
+				break;
+			}
+			
 			gameMap.repaint();//调用JPanel的重绘
+			
+			try
+			{
+				synchronized(this)
+				{
+					wait(16);//每16毫秒刷新，60FPS
+				}
+			}catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }
