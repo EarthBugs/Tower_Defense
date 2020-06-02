@@ -35,7 +35,7 @@ public class GameMap extends JPanel
 		wayPoint = new Point[]{new Point(1280, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 3), new Point(32 + 64 * 10, 32 + 64 * 3), new Point(30 +64 * 10, -128)};
 		
 		teslaCoil = new TeslaCoil(new Point(100, 100));
-		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0));
+		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0), wayPoint);
 	}
 	
 	@Override
@@ -44,6 +44,7 @@ public class GameMap extends JPanel
 		super.paint(g);
 		
 		teslaCoil.paint(g);
+		rhinoHeavyTank.enemyController.move();
 		rhinoHeavyTank.paint(g);
 	}
 }

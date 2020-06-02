@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class RhinoHeavyTank extends Enemy
 {
-	public RhinoHeavyTank(Point position) throws IOException
+	public RhinoHeavyTank(Point position, Point wayPoint[]) throws IOException
 	{
-		super(position, 4, 250, 20, 'G', "HTank", "C:\\Users\\HJQ\\Documents\\JAVA测试工程\\Tower Defense\\src\\Images\\RhinoHeavyTank\\RhinoHeavyTank_");
+		super(position, wayPoint, 0.05f, 250, 20, 'G', 'H', "C:\\Users\\HJQ\\Documents\\JAVA测试工程\\Tower Defense\\src\\Images\\RhinoHeavyTank\\RhinoHeavyTank_");
 	}
 }

@@ -3,6 +3,8 @@ package Enemies;/*
     @Create date 2020/5/28 - 13:45
 */
 
+import GameLogic.GameMap;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -18,9 +20,10 @@ public class Enemy
 	private char type;//敌人类型，G陆军，A空军
 	private char armor;//装甲类型，I(Infantry)步兵，L(LightTank)轻型坦克，H(HeavyTank)重型坦克，F(Fighter)战斗机，B(Bomber)轰炸机
 	private Image image;//图像
-	private EnemyController enemyController;//该敌人对象的控制器，控制敌人移动
+	private String imageURL;//图像路径
+	public EnemyController enemyController;//该敌人对象的控制器，控制敌人移动
 	
-	public Enemy(Point position, float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
+	public Enemy(Point position,Point wayPoint[], float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
 	{
 		index++;//序号自加
 		this.position = position;
@@ -29,7 +32,11 @@ public class Enemy
 		this.firePower = firePower;
 		this.type = type;
 		this.armor = armor;
-		image = ImageIO.read(new File(imageURL + "0.png"));//载入图片
+		
+		this.imageURL = imageURL;
+		this.image = ImageIO.read(new File(imageURL + "180.png"));//载入图片
+		
+		enemyController = new EnemyController(wayPoint, this);
 	}
 	
 	public void paint(Graphics g)
@@ -56,5 +63,25 @@ public class Enemy
 	{
 		this.position.x = x;
 		this.position.y = y;
+	}
+	
+	public void setImage(Image image)
+	{
+		this.image = image;
+	}
+	
+	public Point getPosition()
+	{
+		return position;
+	}
+	
+	public float getVelocity()
+	{
+		return velocity;
+	}
+	
+	public String getImageURL()
+	{
+		return imageURL;
 	}
 }
