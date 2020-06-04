@@ -9,6 +9,8 @@ package Enemies;/*
 		此时单位从P1出发走向P2，则坐标为(x1 + tΔx, y1 + tΔy)
 */
 
+import GameLogic.GameJudger;
+import GameLogic.GameMap;
 import GameLogic.GameWindow;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +22,8 @@ import java.io.IOException;
 
 public class EnemyController
 {
+	private GameMap map;//地图
+	private GameJudger gameJudger;//裁判
 	private Point[] wayPoint;//敌人单位的移动路径点
 	private Point deltaPosition[];//该数组用于存储按顺序数下来每两个路径点之间的差值
 	private float tModulus[];//存储每一段路径中t的系数，用于改善路径长度不同导致一单位t对应的实际距离不一致的情况
@@ -28,9 +32,10 @@ public class EnemyController
 	private double velocity;
 	private int toward = 0;//敌人朝向，初始为0°，指向正东
 	
-	public EnemyController(@NotNull Point wayPoint[], Enemy enemy)//在构造函数中将传入的wayPoint化为参数方程形式的分段函数
+	public EnemyController(@NotNull GameMap map, Enemy enemy)//在构造函数中将传入的wayPoint化为参数方程形式的分段函数
 	{
-		this.wayPoint = wayPoint;
+		this.map = map;
+		this.wayPoint = map.getWayPoint();
 		this.enemy = enemy;
 		this.velocity = enemy.getVelocity();
 		
@@ -51,27 +56,36 @@ public class EnemyController
 	
 	public void move()
 	{
-		t += velocity;//t=t+velocity
-		setCoordinate();
+		if(t < wayPoint.length - 1)//如果t小于路径点长度，即此时敌人单位未到达终点，则t自加并调用setPosition函数来更改该敌人单位的坐标
+		{
+			t += velocity;//t=t+velocity
+			setPosition();
+		}
+		else//敌人到达终点，任务失败
+		{
+			gameju//此处未解决问题：如何调用main函数中的gameJudger
+		}
 	}
 	
-	private void setCoordinate()//该函数用于更改enemy对象的坐标值
+	private void setPosition()//该函数用于更改enemy对象的坐标值
 	{
 		//对t取整，检测当前单位属于哪个路径段，实现分段函数
 		int i = (int) t;
 		
-		//重要】【重要】【重要】【重要】【重要】需要对每个路径段减去路径i，使得不同t对应不同路径段
-		//重要】【重要】【重要】【重要】【重要】需要对每个路径段减去路径i，使得不同t对应不同路径段
-		//重要】【重要】【重要】【重要】【重要】需要对每个路径段减去路径i，使得不同t对应不同路径段
-		//重要】【重要】【重要】【重要】【重要】需要对每个路径段减去路径i，使得不同t对应不同路径段
+		switch(i)
+		{
+			case 0:
+			{
+				//该敌人对象的坐标=该对象所处路径段（每两个点之间为一个段）的起始点坐标+路径始末点坐标差值*tModulus（也就是该段路径对应的系数）*t
+				int x = (int) (wayPoint[i].x + deltaPosition[i].x * tModulus[i] * t);
+				int y = (int) (wayPoint[i].y + deltaPosition[i].y * tModulus[i] * t);
+				System.out.println(x + "  " + y);
+				enemy.setPosition(x, y);
+			}
+		}
 		
-		//该敌人对象的坐标=该对象所处路径段（每两个点之间为一个段）的起始点坐标+路径始末点坐标差值*tModulus（也就是该段路径对应的系数）*t
-		int x = (int) (wayPoint[i].x + deltaPosition[i].x * tModulus[i] * t);
-		int y = (int) (wayPoint[i].y + deltaPosition[i].y * tModulus[i] * t);
-		enemy.setPosition(x, y);
-		
-		//若t的小数部分大于0.95，即接近了拐点，检测下一个方向并转向
-		if((t - (int) t) > 0.95)
+		//若t的小数部分大于0.97，即接近了拐点，检测下一个方向并转向
+		if((t - (int) t) > 0.97)
 			setToward(i);
 	}
 	
@@ -96,8 +110,7 @@ public class EnemyController
 					enemy.setImage(ImageIO.read(new File(enemy.getImageURL() + "0.png")));
 				}
 			}
-		}
-		catch(IOException e)
+		}catch(IOException e)
 		{
 			JOptionPane.showMessageDialog(null, "读取图片文件失败！" + i, "奇怪的错误出现了！", JOptionPane.ERROR_MESSAGE);
 		}

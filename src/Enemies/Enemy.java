@@ -23,7 +23,7 @@ public class Enemy
 	private String imageURL;//图像路径
 	public EnemyController enemyController;//该敌人对象的控制器，控制敌人移动
 	
-	public Enemy(Point position,Point wayPoint[], float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
+	public Enemy(Point position, GameMap map, float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
 	{
 		index++;//序号自加
 		this.position = position;
@@ -36,7 +36,7 @@ public class Enemy
 		this.imageURL = imageURL;
 		this.image = ImageIO.read(new File(imageURL + "180.png"));//载入图片
 		
-		enemyController = new EnemyController(wayPoint, this);
+		enemyController = new EnemyController(map, this);
 	}
 	
 	public void paint(Graphics g)

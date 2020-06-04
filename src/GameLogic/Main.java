@@ -5,12 +5,17 @@ import java.io.IOException;
 
 public class Main
 {
+	public static GameWindow window;
+	public static GameJudger gameJudger;
+	
 	public static void main(String[] args)
 	{
 		try
 		{
-			GameWindow window = new GameWindow();
-			window.run();
+			window = new GameWindow();
+			Thread windowThread = new Thread(window);
+			windowThread.run();
+			gameJudger = new GameJudger(windowThread);//裁判，用于判断游戏输赢
 		}
 		catch(IOException e)
 		{

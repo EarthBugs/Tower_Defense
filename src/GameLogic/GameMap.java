@@ -17,12 +17,14 @@ public class GameMap extends JPanel
 	private int mapWidth;
 	private int mapHeight;
 	
+	private GameWindow window;//游戏的窗口对象
+	
 	private Point[] wayPoint;//敌人单位的移动路径点
 	
 	private TeslaCoil teslaCoil;
 	private RhinoHeavyTank rhinoHeavyTank;
 	
-	GameMap(int mapWidth, int mapHeight) throws IOException//构造函数，传参为地图大小，格数
+	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException//构造函数，传参为地图大小，格数
 	{
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
@@ -35,7 +37,7 @@ public class GameMap extends JPanel
 		wayPoint = new Point[]{new Point(1280, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 3), new Point(32 + 64 * 10, 32 + 64 * 3), new Point(30 +64 * 10, -128)};
 		
 		teslaCoil = new TeslaCoil(new Point(100, 100));
-		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0), wayPoint);
+		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0), this);
 	}
 	
 	@Override
@@ -46,5 +48,15 @@ public class GameMap extends JPanel
 		teslaCoil.paint(g);
 		rhinoHeavyTank.enemyController.move();
 		rhinoHeavyTank.paint(g);
+	}
+	
+	public Point[] getWayPoint()
+	{
+		return wayPoint;
+	}
+	
+	public GameWindow getWindow()
+	{
+		return window;
 	}
 }

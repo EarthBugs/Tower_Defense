@@ -4,14 +4,15 @@ package Enemies.RhinoHeavyTank;/*
 */
 
 import Enemies.Enemy;
+import GameLogic.GameMap;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class RhinoHeavyTank extends Enemy
 {
-	public RhinoHeavyTank(Point position, Point wayPoint[]) throws IOException
+	public RhinoHeavyTank(Point position, GameMap map) throws IOException
 	{
-		super(position, wayPoint, 0.05f, 250, 20, 'G', 'H', "C:\\Users\\HJQ\\Documents\\JAVA测试工程\\Tower Defense\\src\\Images\\RhinoHeavyTank\\RhinoHeavyTank_");
+		super(position, map, 0.05f, 250, 20, 'G', 'H', "C:\\Users\\HJQ\\Documents\\JAVA测试工程\\Tower Defense\\src\\Images\\RhinoHeavyTank\\RhinoHeavyTank_");
 	}
 }

@@ -10,17 +10,17 @@ import java.io.IOException;
 public class GameWindow extends JFrame implements Runnable
 {
 	private JPanel gameMap;
-	private int victoryOrDefeat;//胜负，0为游戏正在进行，1为胜利，2为失败
+	private boolean isRunning;//游戏是否正在运行
 	
 	GameWindow() throws IOException
 	{
 		this.setTitle("红警塔防-Author@地球虫子");//窗口标题
 		this.setResizable(false);//窗口不支持缩放
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭方式
-		this.setSize(1024, 576);//设置窗口尺寸（像素）
+		this.setSize(1280, 720);//设置窗口尺寸（像素）
 		this.setLocationRelativeTo(null);//设置窗口启动时位于屏幕中央
 		
-		gameMap = new GameMap(10, 10);//创建游戏地图
+		gameMap = new GameMap(10, 10, this);//创建游戏地图
 		this.add(gameMap);//向窗口中添加地图面板
 		
 		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
@@ -29,17 +29,8 @@ public class GameWindow extends JFrame implements Runnable
 	@Override
 	public synchronized void run()
 	{
-		while(true)
+		while(isRunning)
 		{
-			if(victoryOrDefeat != 0)//胜负判定
-			{
-				if(victoryOrDefeat == 1)
-					gameMap.add(new JLabel("YOU WIN!!!"));
-				if(victoryOrDefeat == 2)
-					gameMap.add(new JLabel("YOU HAVE BEEN DEFEATED!!!"));
-				break;
-			}
-			
 			gameMap.repaint();//调用JPanel的重绘
 			
 			try
@@ -53,5 +44,10 @@ public class GameWindow extends JFrame implements Runnable
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void setIsRunning(boolean isRunning)
+	{
+		this.isRunning = isRunning;
 	}
 }
