@@ -9,8 +9,10 @@ import java.io.IOException;
 
 public class GameWindow extends JFrame implements Runnable
 {
-	private JPanel gameMap;
-	private boolean isRunning;//游戏是否正在运行
+	private GameMap gameMap;
+	private GameJudger gameJudger;//裁判
+	
+	private boolean isRunning = true;//游戏是否正在运行
 	
 	GameWindow() throws IOException
 	{
@@ -19,11 +21,6 @@ public class GameWindow extends JFrame implements Runnable
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭方式
 		this.setSize(1280, 720);//设置窗口尺寸（像素）
 		this.setLocationRelativeTo(null);//设置窗口启动时位于屏幕中央
-		
-		gameMap = new GameMap(10, 10, this);//创建游戏地图
-		this.add(gameMap);//向窗口中添加地图面板
-		
-		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
 	}
 	
 	@Override
@@ -46,8 +43,18 @@ public class GameWindow extends JFrame implements Runnable
 		}
 	}
 	
-	public void setIsRunning(boolean isRunning)
+	public void initializeGameMap(GameJudger gameJudger) throws IOException
 	{
-		this.isRunning = isRunning;
+		this.gameJudger = gameJudger;
+		
+		gameMap = new GameMap(10, 10, gameJudger);//创建游戏地图
+		this.add(gameMap);//向窗口中添加地图面板
+		
+		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
+	}
+	
+	public void setRunning(boolean running)
+	{
+		isRunning = running;
 	}
 }

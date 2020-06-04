@@ -37,6 +37,7 @@ public class Enemy
 		this.image = ImageIO.read(new File(imageURL + "180.png"));//载入图片
 		
 		enemyController = new EnemyController(map, this);
+		enemyController.start();
 	}
 	
 	public void paint(Graphics g)

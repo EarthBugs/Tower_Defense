@@ -20,7 +20,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class EnemyController
+public class EnemyController extends Thread
 {
 	private GameMap map;//地图
 	private GameJudger gameJudger;//裁判
@@ -50,7 +50,7 @@ public class EnemyController
 			deltaPosition[i] = new Point(wayPoint[i + 1].x - wayPoint[i].x, wayPoint[i + 1].y - wayPoint[i].y);
 			
 			float distance = (float) wayPoint[i].distance(wayPoint[i + 1]);//调用i号点的distance方法测量与i+1号点之间的距离
-			tModulus[i] = 1 / distance;//系数为距离倒数，即可保证每段路径乘该系数之后一单位t对应实际距离一致
+			tModulus[i] = 1;//系数为距离倒数，即可保证每段路径乘该系数之后一单位t对应实际距离一致
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class EnemyController
 		}
 		else//敌人到达终点，任务失败
 		{
-			gameju//此处未解决问题：如何调用main函数中的gameJudger
+			map.getGameJudger().judge(2);//任务失败
 		}
 	}
 	
@@ -72,21 +72,15 @@ public class EnemyController
 		//对t取整，检测当前单位属于哪个路径段，实现分段函数
 		int i = (int) t;
 		
-		switch(i)
-		{
-			case 0:
-			{
-				//该敌人对象的坐标=该对象所处路径段（每两个点之间为一个段）的起始点坐标+路径始末点坐标差值*tModulus（也就是该段路径对应的系数）*t
-				int x = (int) (wayPoint[i].x + deltaPosition[i].x * tModulus[i] * t);
-				int y = (int) (wayPoint[i].y + deltaPosition[i].y * tModulus[i] * t);
-				System.out.println(x + "  " + y);
-				enemy.setPosition(x, y);
-			}
-		}
+		//该敌人对象的坐标=该对象所处路径段（每两个点之间为一个段）的起始点坐标+路径始末点坐标差值*tModulus（也就是该段路径对应的系数）*(t-i)
+		int x = (int) (wayPoint[i].x + deltaPosition[i].x * tModulus[i] * (t - i));
+		int y = (int) (wayPoint[i].y + deltaPosition[i].y * tModulus[i] * (t - i));
+		enemy.setPosition(x, y);
+		//输出该对象的数据
+		System.out.println("x:" + x + ", y:" + y + ", i:" + i + ", t:" + t);
+		System.out.println("Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y + ", tModulus:" + tModulus[i]);
 		
-		//若t的小数部分大于0.97，即接近了拐点，检测下一个方向并转向
-		if((t - (int) t) > 0.97)
-			setToward(i);
+		setToward(i);//检测下一个方向并转向
 	}
 	
 	private void setToward(int i)
@@ -113,6 +107,28 @@ public class EnemyController
 		}catch(IOException e)
 		{
 			JOptionPane.showMessageDialog(null, "读取图片文件失败！" + i, "奇怪的错误出现了！", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	@Override
+	public void run()
+	{
+		super.run();
+		
+		while(true)
+		{
+			try
+			{
+				synchronized(this)
+				{
+					this.wait(16);//每16毫秒刷新，60FPS
+				}
+				
+				this.move();
+			}catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

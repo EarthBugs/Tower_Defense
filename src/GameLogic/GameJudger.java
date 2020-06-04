@@ -7,16 +7,17 @@ import javax.swing.*;
 
 public class GameJudger
 {
-	Thread windowThread;
+	GameWindow window;
 	
-	public GameJudger(Thread windowThread)
+	public GameJudger(GameWindow window)
 	{
-		this.windowThread = windowThread;
+		this.window = window;
 	}
 	
 	public void judge(int gameState)
 	{
-		windowThread.stop();
+		window.setRunning(false);
+		System.out.println("GameWindow stopped!");
 		
 		if(gameState == 1)
 			JOptionPane.showMessageDialog(null, "YOU WIN！", "YOU WIN！", JOptionPane.PLAIN_MESSAGE);

@@ -14,8 +14,9 @@ public class Main
 		{
 			window = new GameWindow();
 			Thread windowThread = new Thread(window);
-			windowThread.run();
-			gameJudger = new GameJudger(windowThread);//裁判，用于判断游戏输赢
+			gameJudger = new GameJudger(window);//裁判，用于判断游戏输赢
+			window.initializeGameMap(gameJudger);
+			windowThread.start();
 		}
 		catch(IOException e)
 		{
