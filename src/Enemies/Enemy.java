@@ -37,12 +37,16 @@ public class Enemy
 		this.image = ImageIO.read(new File(imageURL + "180.png"));//载入图片
 		
 		enemyController = new EnemyController(map, this);
-		enemyController.start();
 	}
 	
 	public void paint(Graphics g)
 	{
 		g.drawImage(image, position.x, position.y, 128, 128, null);
+	}
+	
+	public void startController()
+	{
+		enemyController.start();
 	}
 	
 	public void setX(int x)
@@ -84,5 +88,10 @@ public class Enemy
 	public String getImageURL()
 	{
 		return imageURL;
+	}
+	
+	public EnemyController getEnemyController()
+	{
+		return enemyController;
 	}
 }

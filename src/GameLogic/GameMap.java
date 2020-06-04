@@ -17,15 +17,15 @@ public class GameMap extends JPanel
 	private int mapWidth;
 	private int mapHeight;
 	
-	private Point[] wayPoint;//敌人单位的移动路径点
+	private Point wayPoint[];//敌人单位的移动路径点
 	
 	private GameWindow window;//窗口
 	private GameJudger gameJudger;//裁判
 	
 	private TeslaCoil teslaCoil;
-	private RhinoHeavyTank rhinoHeavyTank;
+	private RhinoHeavyTank rhinoHeavyTank[];
 	
-	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException//构造函数，传参为地图大小，格数
+	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException, InterruptedException//构造函数，传参为地图大小，格数
 	{
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
@@ -38,8 +38,20 @@ public class GameMap extends JPanel
 		//┏━┛
 		//┗━━━
 		wayPoint = new Point[]{new Point(1024, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 3), new Point(32 + 64 * 10, 32 + 64 * 3), new Point(32 + 64 * 10, -128)};
+	}
+	
+	public void addElements() throws IOException, InterruptedException
+	{
 		teslaCoil = new TeslaCoil(new Point(100, 100));
-		rhinoHeavyTank = new RhinoHeavyTank(new Point(0, 0), this);
+		rhinoHeavyTank = new RhinoHeavyTank[]{new RhinoHeavyTank(new Point(0, 0), this), new RhinoHeavyTank(new Point(0, 0), this), new RhinoHeavyTank(new Point(0, 0), this), new RhinoHeavyTank(new Point(0, 0), this)};
+		for(int i = 0; i < 3; i++)
+		{
+			rhinoHeavyTank[i].startController();
+			synchronized(this)
+			{
+				wait(2000);
+			}
+		}
 	}
 	
 	@Override
@@ -48,7 +60,10 @@ public class GameMap extends JPanel
 		super.paint(g);
 		
 		teslaCoil.paint(g);
-		rhinoHeavyTank.paint(g);
+		for(int i = 0; i < 3; i++)
+		{
+			rhinoHeavyTank[i].paint(g);
+		}
 	}
 	
 	public Point[] getWayPoint()
