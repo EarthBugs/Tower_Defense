@@ -19,16 +19,18 @@ public class GameMap extends JPanel
 	
 	private Point[] wayPoint;//敌人单位的移动路径点
 	
+	private GameWindow window;//窗口
 	private GameJudger gameJudger;//裁判
 	
 	private TeslaCoil teslaCoil;
 	private RhinoHeavyTank rhinoHeavyTank;
 	
-	GameMap(int mapWidth, int mapHeight, GameJudger gameJudger) throws IOException//构造函数，传参为地图大小，格数
+	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException//构造函数，传参为地图大小，格数
 	{
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
-		this.gameJudger = gameJudger;
+		this.gameJudger = window.getGameJudger();
+		this.window = window;
 		
 		this.setBackground(new Color(205, 196, 201));
 		
@@ -57,5 +59,10 @@ public class GameMap extends JPanel
 	public GameJudger getGameJudger()
 	{
 		return gameJudger;
+	}
+	
+	public GameWindow getWindow()
+	{
+		return window;
 	}
 }

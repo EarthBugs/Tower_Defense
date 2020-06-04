@@ -56,7 +56,7 @@ public class EnemyController extends Thread
 	
 	public void move()
 	{
-		if(t < wayPoint.length - 1)//如果t小于路径点长度，即此时敌人单位未到达终点，则t自加并调用setPosition函数来更改该敌人单位的坐标
+		if(t + velocity < wayPoint.length - 1)//如果t小于路径点长度，即此时敌人单位未到达终点，则t自加并调用setPosition函数来更改该敌人单位的坐标
 		{
 			t += velocity;//t=t+velocity
 			setPosition();
@@ -115,7 +115,7 @@ public class EnemyController extends Thread
 	{
 		super.run();
 		
-		while(true)
+		while(map.getWindow().getIsRunning())
 		{
 			try
 			{

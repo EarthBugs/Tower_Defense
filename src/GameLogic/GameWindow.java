@@ -47,14 +47,25 @@ public class GameWindow extends JFrame implements Runnable
 	{
 		this.gameJudger = gameJudger;
 		
-		gameMap = new GameMap(10, 10, gameJudger);//创建游戏地图
+		gameMap = new GameMap(10, 10, this);//创建游戏地图
 		this.add(gameMap);//向窗口中添加地图面板
 		
 		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
 	}
 	
-	public void setRunning(boolean running)
+	public GameJudger getGameJudger()
 	{
-		isRunning = running;
+		return gameJudger;
+	}
+	
+	public boolean getIsRunning()
+	{
+		return isRunning;
+	}
+	
+	public void setRunning(boolean isRunning)
+	{
+		this.isRunning = isRunning;
+		System.out.println(this.isRunning);
 	}
 }
