@@ -14,7 +14,6 @@ public class Tower
 	private static int index;//塔的序号
 	private Point position;//位置
 	private int angle;//炮塔角度
-	private int size;//占地面积
 	private int price;//价格
 	private Point imageSize;//图像大小
 	private int powerRequired;//塔需要的电力
@@ -31,7 +30,7 @@ public class Tower
 	
 	public void paint(Graphics g)
 	{
-		g.drawImage(image, position.x, position.y, 512, 512, null);
+		g.drawImage(image, position.x, position.y, 96, 96, null);
 	}
 	
 	public Point getPosition()

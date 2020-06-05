@@ -4,12 +4,14 @@ package GameLogic;/*
     游戏地图
 */
 
-import Enemies.RhinoHeavyTank.RhinoHeavyTank;
+import Enemies.Enemy;
 import Towers.TeslaCoil.TeslaCoil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameMap extends JPanel
 {
@@ -17,15 +19,23 @@ public class GameMap extends JPanel
 	private int mapWidth;
 	private int mapHeight;
 	
-	private Point wayPoint[];//敌人单位的移动路径点
-	
 	private GameWindow window;//窗口
 	private GameJudger gameJudger;//裁判
 	
-	private TeslaCoil teslaCoil;
-	private RhinoHeavyTank rhinoHeavyTank[];
+	private Point wayPoint[];//敌人单位的移动路径点
 	
-	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException, InterruptedException//构造函数，传参为地图大小，格数
+	private int money = 1000;//玩家持有的金钱
+	private JLabel moneyLabel;//玩家金钱的标签
+	
+	private Icon menu;//右侧的菜单栏
+	private JLabel menuLabel;
+	
+	private TeslaCoil teslaCoil;
+	
+	private ArrayList<Enemy> enemyList;//存放敌人单位的列表
+	private Iterator enemyIterator;
+	
+	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException//构造函数，传参为地图大小
 	{
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
@@ -34,24 +44,33 @@ public class GameMap extends JPanel
 		
 		this.setBackground(new Color(205, 196, 201));
 		
-		//初始化路径点。32+64*n即第n行/列的行/列中心，地图共16列9行。当前地图形状：
+		this.menu = new ImageIcon("src\\Images\\Menu\\Menu.jpg");//载入图片
+		
+		this.setLayout(null);//禁用布局管理器
+		
+		//设置金钱显示器的参数并添加进JPanel
+		this.moneyLabel = new JLabel(String.valueOf(money));
+		this.moneyLabel.setSize(64, 16);
+		this.moneyLabel.setLocation(805, 11);
+		this.moneyLabel.setForeground(Color.yellow);
+		this.add(moneyLabel);
+		
+		//添加右侧的菜单栏
+		this.menuLabel = new JLabel(menu);
+		this.menuLabel.setSize(360, 720);
+		this.menuLabel.setLocation(640, 0);
+		this.add(menuLabel);
+		
+		//初始化路径点。60+120*n即第n行/列的行/列中心，地图共5列5行。当前地图形状：
 		//┏━┛
 		//┗━━━
-		wayPoint = new Point[]{new Point(1024, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 7), new Point(32 + 64 * 2, 32 + 64 * 3), new Point(32 + 64 * 10, 32 + 64 * 3), new Point(32 + 64 * 10, -128)};
-	}
-	
-	public void addElements() throws IOException, InterruptedException
-	{
+		wayPoint = new Point[]{new Point(960, 60 + 120 * 4), new Point(60 + 120 * 2, 60 + 120 * 4), new Point(60 + 120 * 2, 60 + 120 * 2), new Point(60 + 120 * 4, 60 + 120 * 2), new Point(60 + 120 * 4, -96)};
+		
 		teslaCoil = new TeslaCoil(new Point(100, 100));
-		rhinoHeavyTank = new RhinoHeavyTank[]{new RhinoHeavyTank(new Point(0, 0), this), new RhinoHeavyTank(new Point(0, 0), this), new RhinoHeavyTank(new Point(0, 0), this), new RhinoHeavyTank(new Point(0, 0), this)};
-		for(int i = 0; i < 3; i++)
-		{
-			rhinoHeavyTank[i].startController();
-			synchronized(this)
-			{
-				wait(2000);
-			}
-		}
+		
+		enemyList = new ArrayList<Enemy>();
+		enemyIterator = enemyList.iterator();
+		new EnemyManager(this, enemyList);
 	}
 	
 	@Override
@@ -60,9 +79,10 @@ public class GameMap extends JPanel
 		super.paint(g);
 		
 		teslaCoil.paint(g);
-		for(int i = 0; i < 3; i++)
+		
+		for(int i = 0; i < enemyList.size(); i++)
 		{
-			rhinoHeavyTank[i].paint(g);
+			enemyList.get(i).paint(g);
 		}
 	}
 	

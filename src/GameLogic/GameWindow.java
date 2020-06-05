@@ -19,12 +19,22 @@ public class GameWindow extends JFrame implements Runnable
 		this.setTitle("红警塔防-Author@地球虫子");//窗口标题
 		this.setResizable(false);//窗口不支持缩放
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭方式
-		this.setSize(1280, 720);//设置窗口尺寸（像素）
+		this.setSize(960, 720);//设置窗口尺寸（像素）
 		this.setLocationRelativeTo(null);//设置窗口启动时位于屏幕中央
 	}
 	
+	public void initializeGameMap(GameJudger gameJudger) throws IOException, InterruptedException
+	{
+		this.gameJudger = gameJudger;
+		
+		gameMap = new GameMap(5, 5, this);//创建游戏地图
+		this.add(gameMap);//向窗口中添加地图面板
+		
+		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
+	}
+	
 	@Override
-	public synchronized void run()
+	public void run()
 	{
 		while(isRunning)
 		{
@@ -43,23 +53,12 @@ public class GameWindow extends JFrame implements Runnable
 		}
 	}
 	
-	public void initializeGameMap(GameJudger gameJudger) throws IOException, InterruptedException
-	{
-		this.gameJudger = gameJudger;
-		
-		gameMap = new GameMap(10, 10, this);//创建游戏地图
-		this.add(gameMap);//向窗口中添加地图面板
-		gameMap.addElements();
-		
-		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
-	}
-	
 	public GameJudger getGameJudger()
 	{
 		return gameJudger;
 	}
 	
-	public boolean getIsRunning()
+	public boolean getRunning()
 	{
 		return isRunning;
 	}

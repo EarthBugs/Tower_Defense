@@ -26,7 +26,6 @@ public class EnemyController extends Thread
 	private GameJudger gameJudger;//裁判
 	private Point[] wayPoint;//敌人单位的移动路径点
 	private Point deltaPosition[];//该数组用于存储按顺序数下来每两个路径点之间的差值
-	private float tModulus[];//存储每一段路径中t的系数，用于改善路径长度不同导致一单位t对应的实际距离不一致的情况
 	private float t = 0;//参数方程的参量，也就是距离系数，默认0
 	private Enemy enemy;//控制器控制的敌人对象
 	private double velocity;
@@ -41,16 +40,49 @@ public class EnemyController extends Thread
 		
 		//初始化两个数组
 		deltaPosition = new Point[wayPoint.length - 1];
-		tModulus = new float[wayPoint.length - 1];
 		
 		//遍历
 		for(int i = 0; i < wayPoint.length - 1; i++)
 		{
 			//i与i+1两点位置差值
 			deltaPosition[i] = new Point(wayPoint[i + 1].x - wayPoint[i].x, wayPoint[i + 1].y - wayPoint[i].y);
-			
-			float distance = (float) wayPoint[i].distance(wayPoint[i + 1]);//调用i号点的distance方法测量与i+1号点之间的距离
-			tModulus[i] = 1;//系数为距离倒数，即可保证每段路径乘该系数之后一单位t对应实际距离一致
+		}
+	}
+	
+	public void startController(int delay) throws InterruptedException
+	{
+		synchronized(this)
+		{
+			System.out.println("延迟：" + delay);
+			wait(delay);
+		}
+		this.start();
+		System.out.println("Controller已启动");
+	}
+	
+	@Override
+	public void run()
+	{
+		super.run();
+		
+		while(map.getWindow().getRunning())
+		{
+			try
+			{
+				synchronized(this)//使用线程锁确保执行不中断
+				{
+					this.wait(16);//每16毫秒刷新，60FPS
+					this.move();
+				}
+				
+				if(enemy.getHp() == 0)//如果敌人对象的生命值归零
+				{
+				
+				}
+			}catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -73,12 +105,12 @@ public class EnemyController extends Thread
 		int i = (int) t;
 		
 		//该敌人对象的坐标=该对象所处路径段（每两个点之间为一个段）的起始点坐标+路径始末点坐标差值*tModulus（也就是该段路径对应的系数）*(t-i)
-		int x = (int) (wayPoint[i].x + deltaPosition[i].x * tModulus[i] * (t - i));
-		int y = (int) (wayPoint[i].y + deltaPosition[i].y * tModulus[i] * (t - i));
+		int x = (int) (wayPoint[i].x + deltaPosition[i].x * (t - i));
+		int y = (int) (wayPoint[i].y + deltaPosition[i].y * (t - i));
 		enemy.setPosition(x, y);
 		//输出该对象的数据
 		System.out.println("x:" + x + ", y:" + y + ", i:" + i + ", t:" + t);
-		System.out.println("Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y + ", tModulus:" + tModulus[i]);
+		System.out.println("Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y);
 		
 		setToward(i);//检测下一个方向并转向
 	}
@@ -107,28 +139,6 @@ public class EnemyController extends Thread
 		}catch(IOException e)
 		{
 			JOptionPane.showMessageDialog(null, "读取图片文件失败！" + i, "奇怪的错误出现了！", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	
-	@Override
-	public void run()
-	{
-		super.run();
-		
-		while(map.getWindow().getIsRunning())
-		{
-			try
-			{
-				synchronized(this)
-				{
-					this.wait(16);//每16毫秒刷新，60FPS
-				}
-				
-				this.move();
-			}catch(InterruptedException e)
-			{
-				e.printStackTrace();
-			}
 		}
 	}
 }
