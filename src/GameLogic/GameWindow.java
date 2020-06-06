@@ -17,9 +17,9 @@ public class GameWindow extends JFrame implements Runnable
 	GameWindow() throws IOException
 	{
 		this.setTitle("红警塔防-Author@地球虫子");//窗口标题
-		this.setResizable(false);//窗口不支持缩放
+		//this.setResizable(false);//窗口不支持缩放
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭方式
-		this.setSize(960, 720);//设置窗口尺寸（像素）
+		this.setSize(1050, 755);//设置窗口尺寸（像素）
 		this.setLocationRelativeTo(null);//设置窗口启动时位于屏幕中央
 	}
 	

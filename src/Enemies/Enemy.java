@@ -30,7 +30,12 @@ public class Enemy
 	public Enemy(GameMap map, float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
 	{
 		index++;//序号自加
-		this.position = map.getWayPoint()[0];
+		
+		//设置初始的坐标。此时不能直接this.position = map.getWayPoint()[0]，否则后续改变本对象的positon的时候wayPoint[0]也会跟着改变
+		this.position = new Point();
+		this.position.x = map.getWayPoint()[0].x;
+		this.position.y = map.getWayPoint()[0].y;
+		
 		this.velocity = velocity;
 		this.hp = hp;
 		this.firePower = firePower;
@@ -47,9 +52,10 @@ public class Enemy
 	
 	public void paint(Graphics g)
 	{
-		g.drawImage(image, position.x, position.y, 128, 128, null);//绘制本体
+		g.drawImage(image, position.x - 64, position.y - 64, null);//绘制本体
+		//System.out.println("Enemy对象paint函数：  x:" + position.x + ", y:" + position.y);
 		g.setColor(Color.green);
-		g.fillRect(position.x + 36, position.y + 48, hp / 5, 4);//绘制血量条
+		g.fillRect(position.x - 26, position.y - 16, hp / 5, 4);//绘制血量条
 	}
 	
 	public Enemy startController(int delay) throws InterruptedException

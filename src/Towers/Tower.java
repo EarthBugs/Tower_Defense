@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Tower
 {
@@ -15,22 +16,28 @@ public class Tower
 	private Point position;//位置
 	private int angle;//炮塔角度
 	private int price;//价格
-	private Point imageSize;//图像大小
 	private int powerRequired;//塔需要的电力
 	private boolean isActivated;//是否启用
 	private Image image;//图像
 	
-	protected Tower(Point position, Point imageSize, String imageURL) throws IOException//构造函数
+	protected Tower(Point position, String imageURL) throws IOException//构造函数
 	{
 		index++;//序号自加
 		this.position = position;
-		this.imageSize = imageSize;
 		image = ImageIO.read(new File(imageURL + "0.png"));//载入图片
 	}
 	
 	public void paint(Graphics g)
 	{
-		g.drawImage(image, position.x, position.y, 96, 96, null);
+		g.drawImage(image, position.x - 64, position.y - 96, null);
+	}
+	
+	public void attack(ArrayList enemyList)
+	{
+		for(int i = 0; i < enemyList.size(); i++)
+		{
+		
+		}
 	}
 	
 	public Point getPosition()

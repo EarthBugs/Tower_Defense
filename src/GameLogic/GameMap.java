@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GameMap extends JPanel
 {
@@ -33,7 +32,7 @@ public class GameMap extends JPanel
 	private TeslaCoil teslaCoil;
 	
 	private ArrayList<Enemy> enemyList;//存放敌人单位的列表
-	private Iterator enemyIterator;
+	private EnemyManager enemyManager;//敌人对象管理器
 	
 	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException//构造函数，传参为地图大小
 	{
@@ -51,38 +50,51 @@ public class GameMap extends JPanel
 		//设置金钱显示器的参数并添加进JPanel
 		this.moneyLabel = new JLabel(String.valueOf(money));
 		this.moneyLabel.setSize(64, 16);
-		this.moneyLabel.setLocation(805, 11);
+		this.moneyLabel.setLocation(865, 11);
 		this.moneyLabel.setForeground(Color.yellow);
 		this.add(moneyLabel);
 		
 		//添加右侧的菜单栏
 		this.menuLabel = new JLabel(menu);
 		this.menuLabel.setSize(360, 720);
-		this.menuLabel.setLocation(640, 0);
+		this.menuLabel.setLocation(700, 0);
 		this.add(menuLabel);
 		
 		//初始化路径点。60+120*n即第n行/列的行/列中心，地图共5列5行。当前地图形状：
-		//┏━┛
-		//┗━━━
-		wayPoint = new Point[]{new Point(960, 60 + 120 * 4), new Point(60 + 120 * 2, 60 + 120 * 4), new Point(60 + 120 * 2, 60 + 120 * 2), new Point(60 + 120 * 4, 60 + 120 * 2), new Point(60 + 120 * 4, -96)};
+		//┏━━┛
+		//┗━━━━
+		wayPoint = new Point[]{new Point(640, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 1), new Point(72 + 144 * 3, 72 + 144 * 1), new Point(72 + 144 * 3, -96)};
 		
-		teslaCoil = new TeslaCoil(new Point(100, 100));
+		teslaCoil = new TeslaCoil(new Point(72 + 144 * 1, 72 + 144 * 1));
 		
 		enemyList = new ArrayList<Enemy>();
-		enemyIterator = enemyList.iterator();
-		new EnemyManager(this, enemyList);
+		
+		this.enemyManager = new EnemyManager(this, enemyList);
+		enemyManager.start();
 	}
 	
 	@Override
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		
 		teslaCoil.paint(g);
+		
+		paintGrid(g);
 		
 		for(int i = 0; i < enemyList.size(); i++)
 		{
 			enemyList.get(i).paint(g);
+		}
+	}
+	
+	public void paintGrid(Graphics g)//一个用于绘制地面格子的函数
+	{
+		for(int i = 0; i < mapWidth; i++)//横向循环
+		{
+			for(int j = 0; j < mapHeight; j++)
+			{
+				g.drawRect(144 * i, 144 * j, 144, 144);
+			}
 		}
 	}
 	

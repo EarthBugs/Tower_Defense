@@ -18,8 +18,6 @@ public class EnemyManager extends Thread
 	{
 		this.map = map;
 		this.enemyList = enemyList;
-		
-		this.start();
 	}
 	
 	@Override
@@ -30,7 +28,7 @@ public class EnemyManager extends Thread
 		try
 		{
 			//生成3个犀牛坦克对象
-			for(int i = 0; i < 1; i++)
+			for(int i = 0; i < 3; i++)
 			{
 				enemyList.add(new RhinoHeavyTank(map).startController(i * 1000 + 1));
 			}

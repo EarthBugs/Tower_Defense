@@ -109,8 +109,7 @@ public class EnemyController extends Thread
 		int y = (int) (wayPoint[i].y + deltaPosition[i].y * (t - i));
 		enemy.setPosition(x, y);
 		//输出该对象的数据
-		System.out.println("x:" + x + ", y:" + y + ", i:" + i + ", t:" + t);
-		System.out.println("Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y);
+		System.out.println(wayPoint[i].x+"控制器：  x:" + x + ", y:" + y + ", i:" + i + ", t:" + t + ", Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y);
 		
 		setToward(i);//检测下一个方向并转向
 	}
@@ -127,7 +126,7 @@ public class EnemyController extends Thread
 			}
 			else//否则单位向左或向右
 			{
-				if(wayPoint[i + 1].x - wayPoint[i].x < 0)//向左
+				if((wayPoint[i + 1].x - wayPoint[i].x) < 0)//向左
 				{
 					enemy.setImage(ImageIO.read(new File(enemy.getImageURL() + "180.png")));
 				}
