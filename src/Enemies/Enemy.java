@@ -47,7 +47,7 @@ public class Enemy
 		
 		enemyController = new EnemyController(map, this);
 		
-		System.out.println("已构造 Enemy" + index);
+		System.out.println("已构造 Enemy" + index + " " + this);
 	}
 	
 	public void paint(Graphics g)
@@ -113,5 +113,10 @@ public class Enemy
 	public int getHp()
 	{
 		return hp;
+	}
+	
+	public static int getIndex()
+	{
+		return index;
 	}
 }

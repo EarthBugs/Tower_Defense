@@ -16,7 +16,7 @@ public class GameJudger
 	
 	public void judge(int gameState)
 	{
-		window.setRunning(false);
+		window.setRunning(false);//停止所有线程中的循环
 		System.out.println("GameWindow stopped!");
 		
 		if(gameState == 1)

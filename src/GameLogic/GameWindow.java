@@ -30,6 +30,10 @@ public class GameWindow extends JFrame implements Runnable
 		gameMap = new GameMap(5, 5, this);//创建游戏地图
 		this.add(gameMap);//向窗口中添加地图面板
 		
+		//启动两个管理器
+		gameMap.getTowerManager().start(this);
+		gameMap.getEnemyManager().start();
+		
 		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
 	}
 	
@@ -38,12 +42,11 @@ public class GameWindow extends JFrame implements Runnable
 	{
 		while(isRunning)
 		{
-			gameMap.repaint();//调用JPanel的重绘
-			
 			try
 			{
 				synchronized(this)
 				{
+					gameMap.repaint();//调用JPanel的重绘
 					wait(16);//每16毫秒刷新，60FPS
 				}
 			}catch(InterruptedException e)

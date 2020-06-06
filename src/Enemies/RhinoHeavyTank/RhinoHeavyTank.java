@@ -13,6 +13,6 @@ public class RhinoHeavyTank extends Enemy
 {
 	public RhinoHeavyTank(GameMap map) throws IOException
 	{
-		super(map, 0.01f, 250, 20, 'G', 'H', "C:\\Users\\HJQ\\Documents\\JAVA测试工程\\Tower Defense\\src\\Images\\RhinoHeavyTank\\RhinoHeavyTank_");
+		super(map, 0.005f, 250, 20, 'G', 'H', "C:\\Users\\HJQ\\Documents\\JAVA测试工程\\Tower Defense\\src\\Images\\RhinoHeavyTank\\RhinoHeavyTank_");
 	}
 }

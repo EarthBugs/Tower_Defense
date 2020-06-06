@@ -6,11 +6,13 @@ package GameLogic;/*
 
 import Enemies.Enemy;
 import Towers.TeslaCoil.TeslaCoil;
+import Towers.Tower;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameMap extends JPanel
 {
@@ -29,13 +31,16 @@ public class GameMap extends JPanel
 	private Icon menu;//右侧的菜单栏
 	private JLabel menuLabel;
 	
-	private TeslaCoil teslaCoil;
+	private HashMap<Point, Tower> towerMap;//存储塔的映射
+	private TowerManager towerManager;//塔管理器
 	
 	private ArrayList<Enemy> enemyList;//存放敌人单位的列表
 	private EnemyManager enemyManager;//敌人对象管理器
 	
 	GameMap(int mapWidth, int mapHeight, GameWindow window) throws IOException//构造函数，传参为地图大小
 	{
+		super();
+		
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 		this.gameJudger = window.getGameJudger();
@@ -63,25 +68,32 @@ public class GameMap extends JPanel
 		//初始化路径点。60+120*n即第n行/列的行/列中心，地图共5列5行。当前地图形状：
 		//┏━━┛
 		//┗━━━━
-		wayPoint = new Point[]{new Point(640, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 1), new Point(72 + 144 * 3, 72 + 144 * 1), new Point(72 + 144 * 3, -96)};
+		wayPoint = new Point[]{new Point(700, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 1), new Point(72 + 144 * 3, 72 + 144 * 1), new Point(72 + 144 * 3, -96)};
 		
-		teslaCoil = new TeslaCoil(new Point(72 + 144 * 1, 72 + 144 * 1));
+		enemyList = new ArrayList<Enemy>();//初始化敌人列表
 		
-		enemyList = new ArrayList<Enemy>();
+		this.enemyManager = new EnemyManager(this, enemyList);//创建敌人管理器
 		
-		this.enemyManager = new EnemyManager(this, enemyList);
-		enemyManager.start();
+		towerMap = new HashMap<Point, Tower>();//初始化塔映射
+		
+		this.towerManager = new TowerManager(towerMap, enemyList);//创建塔管理器
 	}
 	
 	@Override
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		teslaCoil.paint(g);
 		
-		paintGrid(g);
+		paintGrid(g);//绘制网格
 		
-		for(int i = 0; i < enemyList.size(); i++)
+		for (Point key : towerMap.keySet())//遍历towerMap中的每一个对象并执行绘制
+		{
+			Tower tower = towerMap.get(key);
+			
+			tower.paint(g);
+		}
+		
+		for(int i = 0; i < enemyList.size(); i++)//遍历enemyList中的每一个对象并执行绘制
 		{
 			enemyList.get(i).paint(g);
 		}
@@ -111,5 +123,15 @@ public class GameMap extends JPanel
 	public GameWindow getWindow()
 	{
 		return window;
+	}
+	
+	public TowerManager getTowerManager()
+	{
+		return towerManager;
+	}
+	
+	public EnemyManager getEnemyManager()
+	{
+		return enemyManager;
 	}
 }

@@ -4,11 +4,12 @@ package Towers;/*
     塔的父类
 */
 
+import Enemies.Enemy;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Tower
 {
@@ -20,11 +21,15 @@ public class Tower
 	private boolean isActivated;//是否启用
 	private Image image;//图像
 	
+	private TowerWeapon towerWeapon;//武器
+	
 	protected Tower(Point position, String imageURL) throws IOException//构造函数
 	{
 		index++;//序号自加
 		this.position = position;
 		image = ImageIO.read(new File(imageURL + "0.png"));//载入图片
+		
+		towerWeapon = new TowerWeapon(256, 1000);//初始化towerWeapon
 	}
 	
 	public void paint(Graphics g)
@@ -32,16 +37,13 @@ public class Tower
 		g.drawImage(image, position.x - 64, position.y - 96, null);
 	}
 	
-	public void attack(ArrayList enemyList)
-	{
-		for(int i = 0; i < enemyList.size(); i++)
-		{
-		
-		}
-	}
-	
 	public Point getPosition()
 	{
 		return position;
+	}
+	
+	public TowerWeapon getTowerWeapon()
+	{
+		return towerWeapon;
 	}
 }

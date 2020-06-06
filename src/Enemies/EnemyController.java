@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EnemyController extends Thread
 {
@@ -55,9 +56,9 @@ public class EnemyController extends Thread
 		{
 			System.out.println("延迟：" + delay);
 			wait(delay);
+			this.start();
+			System.out.println("已启动：Controller");
 		}
-		this.start();
-		System.out.println("Controller已启动");
 	}
 	
 	@Override
@@ -73,11 +74,11 @@ public class EnemyController extends Thread
 				{
 					this.wait(16);//每16毫秒刷新，60FPS
 					this.move();
-				}
-				
-				if(enemy.getHp() == 0)//如果敌人对象的生命值归零
-				{
-				
+					
+					if(enemy.getHp() == 0)//如果敌人对象的生命值归零
+					{
+					
+					}
 				}
 			}catch(InterruptedException e)
 			{
@@ -109,7 +110,7 @@ public class EnemyController extends Thread
 		int y = (int) (wayPoint[i].y + deltaPosition[i].y * (t - i));
 		enemy.setPosition(x, y);
 		//输出该对象的数据
-		System.out.println(wayPoint[i].x+"控制器：  x:" + x + ", y:" + y + ", i:" + i + ", t:" + t + ", Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y);
+		//System.out.println("控制器输出：  x:" + x + ", y:" + y + ", i:" + i + ", t:" + t + ", Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y);
 		
 		setToward(i);//检测下一个方向并转向
 	}
@@ -121,7 +122,6 @@ public class EnemyController extends Thread
 			//这部分是检测并重设朝向的代码，若后续改为非水平/垂直路径，需要重写
 			if(wayPoint[i + 1].x - wayPoint[i].x == 0)//若当前路径段始末点的x差值为零，即两者在同一列上，则对象方向向上
 			{
-				System.out.println(enemy.getImageURL() + "90.png");
 				enemy.setImage(ImageIO.read(new File(enemy.getImageURL() + "90.png")));
 			}
 			else//否则单位向左或向右

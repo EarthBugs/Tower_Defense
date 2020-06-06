@@ -13,5 +13,7 @@ public class TeslaCoil extends Tower
 	public TeslaCoil(Point position) throws IOException
 	{
 		super(position, "src\\Images\\TeslaCoil\\TeslaCoil_");
+		
+		System.out.println("已构造：TeslaCoil");
 	}
 }
