@@ -48,9 +48,9 @@ public class Tower
 			}
 			enemy.damaged(towerWeapon.getDamage());//调用敌人的damaged函数，并传入本塔对象的武器的伤害值
 		}
-		else//Timer不为零，Timer增加
+		else//Timer不为零，Timer减少
 		{
-			towerWeapon.addFireTimer();
+			towerWeapon.reduceFireTimer();
 		}
 	}
 	

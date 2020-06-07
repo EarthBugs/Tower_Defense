@@ -56,9 +56,9 @@ public class TowerWeapon
 		this.fireTimer = fireTimeInterval;
 	}
 	
-	public void addFireTimer()
+	public void reduceFireTimer()
 	{
-		this.fireTimer++;
+		this.fireTimer--;
 	}
 	
 	public int getDamage()
