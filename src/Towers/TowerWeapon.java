@@ -21,6 +21,15 @@ public class TowerWeapon
 		this.fireDelay = fireDelay;
 	}
 	
+	public TowerWeapon(TowerWeapon towerWeapon)//复制构造函数
+	{
+		this.damage = towerWeapon.getDamage();
+		this.fireRange = towerWeapon.getFireRange();
+		this.fireTimeInterval = towerWeapon.getFireTimeInterval();
+		
+		this.fireDelay = towerWeapon.getFireDelay();
+	}
+	
 	public synchronized void playFireSound()
 	{
 		//空函数

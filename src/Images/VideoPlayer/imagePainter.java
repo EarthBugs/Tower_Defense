@@ -19,8 +19,8 @@ public class imagePainter
 		this.image = image;
 	}
 	
-	public void start(Graphics g, Point position)
+	public void start(Graphics g, Point location)
 	{
-		g.drawImage(image, position.x, position.y, null);
+		g.drawImage(image, location.x, location.y, null);
 	}
 }

@@ -11,7 +11,6 @@ package Enemies;/*
 
 import GameLogic.GameJudger;
 import GameLogic.GameMap;
-import GameLogic.GameWindow;
 import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
@@ -19,14 +18,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class EnemyController extends Thread
 {
 	private GameMap map;//地图
 	private GameJudger gameJudger;//裁判
 	private Point[] wayPoint;//敌人单位的移动路径点
-	private Point deltaPosition[];//该数组用于存储按顺序数下来每两个路径点之间的差值
+	private Point deltaLocation[];//该数组用于存储按顺序数下来每两个路径点之间的差值
 	private float t = 0;//参数方程的参量，也就是距离系数，默认0
 	private Enemy enemy;//控制器控制的敌人对象
 	private double velocity;
@@ -42,13 +40,13 @@ public class EnemyController extends Thread
 		this.velocity = enemy.getVelocity();
 		
 		//初始化两个数组
-		deltaPosition = new Point[wayPoint.length - 1];
+		deltaLocation = new Point[wayPoint.length - 1];
 		
 		//遍历
 		for(int i = 0; i < wayPoint.length - 1; i++)
 		{
 			//i与i+1两点位置差值
-			deltaPosition[i] = new Point(wayPoint[i + 1].x - wayPoint[i].x, wayPoint[i + 1].y - wayPoint[i].y);
+			deltaLocation[i] = new Point(wayPoint[i + 1].x - wayPoint[i].x, wayPoint[i + 1].y - wayPoint[i].y);
 		}
 	}
 	
@@ -88,9 +86,9 @@ public class EnemyController extends Thread
 					this.wait(16);//每16毫秒刷新，60FPS
 					this.move();
 					
-					if(enemy.getHp() == 0)//如果敌人对象的生命值归零
+					if(enemy.getHp() <= 0)//如果敌人对象的生命值归零
 					{
-					
+						break;//跳出循环，结束该控制器
 					}
 				}
 			}catch(InterruptedException e)
@@ -102,28 +100,30 @@ public class EnemyController extends Thread
 	
 	public void move()
 	{
-		if(t + velocity < wayPoint.length - 1)//如果t小于路径点长度，即此时敌人单位未到达终点，则t自加并调用setPosition函数来更改该敌人单位的坐标
+		if(t + velocity < wayPoint.length - 1)//如果t小于路径点长度，即此时敌人单位未到达终点，则t自加并调用setLocation函数来更改该敌人单位的坐标
 		{
 			t += velocity;//t=t+velocity
-			setPosition();
+			setLocation();
 		}
 		else//敌人到达终点，任务失败
 		{
+			System.out.println(enemy + "stopped the game");
 			map.getGameJudger().judge(2);//任务失败
 		}
 	}
 	
-	private void setPosition()//该函数用于更改enemy对象的坐标值
+	private void setLocation()//该函数用于更改enemy对象的坐标值
 	{
 		//对t取整，检测当前单位属于哪个路径段，实现分段函数
 		int i = (int) t;
 		
 		//该敌人对象的坐标=该对象所处路径段（每两个点之间为一个段）的起始点坐标+路径始末点坐标差值*tModulus（也就是该段路径对应的系数）*(t-i)
-		int x = (int) (wayPoint[i].x + deltaPosition[i].x * (t - i));
-		int y = (int) (wayPoint[i].y + deltaPosition[i].y * (t - i));
-		enemy.setPosition(x, y);
+		int x = (int) (wayPoint[i].x + deltaLocation[i].x * (t - i));
+		int y = (int) (wayPoint[i].y + deltaLocation[i].y * (t - i));
+		enemy.setLocation(x, y);
+		
 		//输出该对象的数据
-		//System.out.println("控制器输出：  x:" + x + ", y:" + y + ", i:" + i + ", t:" + t + ", Δx:" + deltaPosition[i].x + ", Δy:" + deltaPosition[i].y);
+		//System.out.println("控制器输出：  x:" + x + ", y:" + y + ", i:" + i + ", t:" + t + ", Δx:" + deltaLocation[i].x + ", Δy:" + deltaLocation[i].y);
 		
 		setToward(i);//检测下一个方向并转向
 	}

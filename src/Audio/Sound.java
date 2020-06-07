@@ -29,6 +29,31 @@ public class Sound extends Thread//播放音效的类
 		this.nextSound = nextSound;
 	}
 	
+	public Sound(String soundURL, Object obj)//重载构造函数，obj用于与普通构造函数区分。本构造函数不创建新线程，直接在构造函数中播放
+	{
+		Player player = null;
+		try
+		{
+			//声明一个File对象
+			File mp3 = new File(soundURL);
+			
+			//创建一个输入流
+			FileInputStream fileInputStream = new FileInputStream(mp3);
+			
+			//创建播放器对象，把文件的输入流传进去
+			player = new Player(fileInputStream);
+			
+			//调用播放方法进行播放
+			player.play();
+		}catch(FileNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(null, "读取音效文件失败！", "奇怪的错误出现了！", JOptionPane.ERROR_MESSAGE);
+		}catch(JavaLayerException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void run()
 	{

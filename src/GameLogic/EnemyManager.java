@@ -58,14 +58,14 @@ public class EnemyManager extends Thread
 			for(int i = 0; i < enemyList.size(); i++)//遍历enemyList中的每一个对象
 			{
 				Enemy enemy = enemyList.get(i);
-				if(enemy.getHp() <= 0)//检测敌人生命值是否为零
+				if(enemy.getHp() <= 0)//检测敌人生命值是否<=0
 				{
-					enemyList.remove(i);//移除敌人对象
 					System.out.println("已删除：" + enemyList.get(i));
+					enemyList.remove(enemy);//移除敌人对象
 					
 					map.addMoney(enemy.getBounty());//为玩家增加金钱
 					
-					new Sound("src\\Audio\\单位爆炸.mp3").start();//播放爆炸音效
+					new Sound("src\\Audio\\SoundEffects\\单位爆炸.mp3").start();//播放爆炸音效
 				}
 			}
 		}

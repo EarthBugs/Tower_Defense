@@ -9,7 +9,7 @@ import Towers.TowerWeapon;
 
 public class TeslaCoil_Weapon extends TowerWeapon
 {
-	private String fireSoundURL = "src\\Audio\\";//开火音效路径
+	private String fireSoundURL = "src\\Audio\\SoundEffects\\";//开火音效路径
 	
 	protected TeslaCoil_Weapon(int damage, int fireRange, int fireTimeInterval)
 	{

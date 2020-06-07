@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class TowerManager extends Thread
 {
@@ -30,11 +31,11 @@ public class TowerManager extends Thread
 	
 	public void addTower(Tower tower)//该函数用于向towerMap中添加tower
 	{
-		towerMap.put(tower.getPosition(), tower);
+		towerMap.put(tower.getLocation(), tower);
 	}
 	
 	@Override
-	public void run()
+	public void run()//索敌
 	{
 		super.run();
 		
@@ -42,16 +43,16 @@ public class TowerManager extends Thread
 		{
 			synchronized(this)
 			{
-				for (Point key : towerMap.keySet())//遍历towerMap
+				for(Point key : towerMap.keySet())//遍历towerMap中的每一个对象并索敌
 				{
 					Tower tower = towerMap.get(key);
 					
 					for(int i = 0; i < enemyList.size(); i++)//为该塔索敌，遍历enemyList中的每个敌人对象
 					{
 						Enemy enemy = enemyList.get(i);
-						if(enemy.getPosition().distance(tower.getPosition()) < tower.getTowerWeapon().getFireRange())//判断敌人对象与本对象之间的距离是否小于武器的攻击范围
+						if(enemy.getLocation().distance(tower.getLocation()) < tower.getTowerWeapon().getFireRange())//判断敌人对象与本对象之间的距离是否小于武器的攻击范围
 						{
-							tower.attack(enemy);
+							tower.setTarget(enemy);//为塔设置攻击目标
 							break;//找到第一个敌人对象之后，跳出内层的for循环，开始为下一个塔索敌
 						}
 					}
@@ -73,8 +74,6 @@ public class TowerManager extends Thread
 		System.out.println("已启动：塔管理器");
 		
 		this.win = win;
-		
-		towerMap.put(new Point(72 + 144 * 2, 72 + 144 * 2), new TeslaCoil(new Point(72 + 144 * 2, 72 + 144 * 2)));
 		
 		super.start();
 	}

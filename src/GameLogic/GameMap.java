@@ -60,7 +60,7 @@ public class GameMap extends JPanel
 		//初始化路径点。60+120*n即第n行/列的行/列中心，地图共5列5行。当前地图形状：
 		//┏━━┛
 		//┗━━━━
-		wayPoint = new Point[]{new Point(700, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 1), new Point(72 + 144 * 3, 72 + 144 * 1), new Point(72 + 144 * 3, -96)};
+		wayPoint = new Point[]{new Point(700, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 3), new Point(72 + 144 * 1, 72 + 144 * 1), new Point(72 + 144 * 3, 72 + 144 * 1), new Point(72 + 144 * 3, -256)};
 		
 		enemyList = new ArrayList<Enemy>();//初始化敌人列表
 		
@@ -120,6 +120,11 @@ public class GameMap extends JPanel
 		return gameJudger;
 	}
 	
+	public HashMap<Point, Tower> getTowerMap()
+	{
+		return towerMap;
+	}
+	
 	public GameWindow getWindow()
 	{
 		return window;
@@ -133,6 +138,11 @@ public class GameMap extends JPanel
 	public EnemyManager getEnemyManager()
 	{
 		return enemyManager;
+	}
+	
+	public int getMoney()
+	{
+		return money;
 	}
 	
 	public int addMoney(int deltaMoney)

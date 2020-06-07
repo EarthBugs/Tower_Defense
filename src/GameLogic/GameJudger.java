@@ -24,16 +24,16 @@ public class GameJudger
 		if(gameState == 1)
 		{
 			//输出语音
-			Sound missionAccomplished = new Sound("src\\Audio\\任务成功.mp3");
-			new Sound("src\\Audio\\你赢了.mp3", missionAccomplished).start();
+			Sound missionAccomplished = new Sound("src\\Audio\\SoundEffects\\任务成功.mp3");
+			new Sound("src\\Audio\\SoundEffects\\你赢了.mp3", missionAccomplished).start();
 			
 			JOptionPane.showMessageDialog(null, "YOU WIN！", "YOU WIN！", JOptionPane.PLAIN_MESSAGE);//弹出提示框
 		}
 		if(gameState == 2)
 		{
 			//输出语音
-			Sound missionFailed = new Sound("src\\Audio\\任务失败.mp3");
-			new Sound("src\\Audio\\你输了.mp3", missionFailed).start();
+			Sound missionFailed = new Sound("src\\Audio\\SoundEffects\\任务失败.mp3");
+			new Sound("src\\Audio\\SoundEffects\\你输了.mp3", missionFailed).start();
 			
 			JOptionPane.showMessageDialog(null, "YOU HAVE BEEN DEFEATED！", "YOU HAVE BEEN DEFEATED！", JOptionPane.PLAIN_MESSAGE);//弹出提示框
 		}

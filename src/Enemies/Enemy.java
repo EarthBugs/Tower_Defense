@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public class Enemy
 {
 	private static int index;//序号
-	private Point position;//位置
+	private Point location;//位置
 	private float velocity;//移动速度
 	private int hp;//生命值
 	private int bounty;//单位被摧毁时玩家得到的的赏金
@@ -31,7 +31,7 @@ public class Enemy
 	{
 		index++;//序号自加
 		
-		this.position = new Point(-2048, - 2048);
+		this.location = new Point(-2048, - 2048);
 		
 		this.velocity = velocity;
 		this.hp = hp;
@@ -56,16 +56,16 @@ public class Enemy
 	
 	public void paint(Graphics g)
 	{
-		g.drawImage(image, position.x - 64, position.y - 64, null);//绘制本体
-		//System.out.println("Enemy对象paint函数：  x:" + position.x + ", y:" + position.y);
+		g.drawImage(image, location.x - 64, location.y - 64, null);//绘制本体
+		//System.out.println("Enemy对象paint函数：  x:" + location.x + ", y:" + location.y);
 		g.setColor(Color.green);
-		g.fillRect(position.x - 26, position.y - 16, hp / 5, 4);//绘制血量条
+		g.fillRect(location.x - 26, location.y - 16, hp / 5, 4);//绘制血量条
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "Enemy" + index + "(x:" + position.x + ", y:" + position.y + ")";
+		return "Enemy" + index + "(x:" + location.x + ", y:" + location.y + ")";
 	}
 	
 	public Enemy startController(int delay) throws InterruptedException
@@ -74,25 +74,30 @@ public class Enemy
 		return this;
 	}
 	
+	public void killEnemy()//删除该敌人对象被摧毁
+	{
+	
+	}
+	
 	public void setX(int x)
 	{
-		this.position.x = x;
+		this.location.x = x;
 	}
 	
 	public void setY(int y)
 	{
-		this.position.y = y;
+		this.location.y = y;
 	}
 	
-	public void setPosition(Point position)
+	public void setLocation(Point location)
 	{
-		this.position = position;
+		this.location = location;
 	}
 	
-	public void setPosition(int x, int y)
+	public void setLocation(int x, int y)
 	{
-		this.position.x = x;
-		this.position.y = y;
+		this.location.x = x;
+		this.location.y = y;
 	}
 	
 	public void setImage(Image image)
@@ -100,9 +105,9 @@ public class Enemy
 		this.image = image;
 	}
 	
-	public Point getPosition()
+	public Point getLocation()
 	{
-		return position;
+		return location;
 	}
 	
 	public float getVelocity()
