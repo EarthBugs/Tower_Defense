@@ -52,18 +52,10 @@ public class GameMap extends JPanel
 		
 		this.setLayout(null);//禁用布局管理器
 		
-		//设置金钱显示器的参数并添加进JPanel
-		this.moneyLabel = new JLabel(String.valueOf(money));
-		this.moneyLabel.setSize(64, 16);
-		this.moneyLabel.setLocation(865, 11);
-		this.moneyLabel.setForeground(Color.yellow);
-		this.add(moneyLabel);
-		
 		//添加右侧的菜单栏
 		this.menuLabel = new JLabel(menu);
 		this.menuLabel.setSize(360, 720);
 		this.menuLabel.setLocation(700, 0);
-		this.add(menuLabel);
 		
 		//初始化路径点。60+120*n即第n行/列的行/列中心，地图共5列5行。当前地图形状：
 		//┏━━┛
@@ -83,6 +75,14 @@ public class GameMap extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
+		
+		//设置金钱显示器的参数并添加进JPanel
+		this.moneyLabel = new JLabel(String.valueOf(money));
+		this.moneyLabel.setSize(64, 16);
+		this.moneyLabel.setLocation(865, 11);
+		this.moneyLabel.setForeground(Color.yellow);
+		this.add(moneyLabel);
+		this.add(menuLabel);//绘制menu
 		
 		paintGrid(g);//绘制网格
 		
@@ -133,5 +133,19 @@ public class GameMap extends JPanel
 	public EnemyManager getEnemyManager()
 	{
 		return enemyManager;
+	}
+	
+	public int addMoney(int deltaMoney)
+	{
+		this.money += deltaMoney;
+		System.out.println("玩家金钱已增加：" + deltaMoney + "，当前金钱：" + money);
+		return money;
+	}
+	
+	public int reduceMoney(int deltaMoney)
+	{
+		this.money -= deltaMoney;
+		System.out.println("玩家金钱已减少：" + deltaMoney + "，当前金钱：" + money);
+		return money;
 	}
 }
