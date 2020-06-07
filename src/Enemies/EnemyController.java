@@ -32,6 +32,8 @@ public class EnemyController extends Thread
 	private double velocity;
 	private int toward = 0;//敌人朝向，初始为0°，指向正东
 	
+	private int activateDelay;//启动延迟
+	
 	public EnemyController(@NotNull GameMap map, Enemy enemy)//在构造函数中将传入的wayPoint化为参数方程形式的分段函数
 	{
 		this.map = map;
@@ -55,7 +57,7 @@ public class EnemyController extends Thread
 		synchronized(this)
 		{
 			System.out.println("延迟：" + delay);
-			wait(delay);
+			this.activateDelay = delay;
 			this.start();
 			System.out.println("已启动：Controller");
 		}
@@ -65,6 +67,17 @@ public class EnemyController extends Thread
 	public void run()
 	{
 		super.run();
+		
+		try
+		{
+			synchronized(this)
+			{
+				wait(activateDelay);
+			}
+		}catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 		
 		while(map.getWindow().getRunning())
 		{
