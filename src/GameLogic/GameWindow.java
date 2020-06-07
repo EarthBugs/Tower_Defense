@@ -32,7 +32,7 @@ public class GameWindow extends JFrame implements Runnable
 		
 		//启动两个管理器
 		gameMap.getTowerManager().start(this);
-		gameMap.getEnemyManager().start();
+		gameMap.getEnemyManager().start(this);
 		
 		this.setVisible(true);//在上述流程完成后显示窗口，确保此时内容已经初始化完毕
 	}
@@ -69,6 +69,5 @@ public class GameWindow extends JFrame implements Runnable
 	public void setRunning(boolean isRunning)
 	{
 		this.isRunning = isRunning;
-		System.out.println(this.isRunning);
 	}
 }

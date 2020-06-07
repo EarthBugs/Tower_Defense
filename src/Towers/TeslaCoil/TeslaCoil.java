@@ -12,7 +12,7 @@ public class TeslaCoil extends Tower
 {
 	public TeslaCoil(Point position) throws IOException
 	{
-		super(position, "src\\Images\\TeslaCoil\\TeslaCoil_");
+		super(position, "src\\Images\\TeslaCoil\\TeslaCoil_", new TeslaCoil_Weapon(100, 256, 1000));//初始化towerWeapon);
 		
 		System.out.println("已构造：TeslaCoil");
 	}

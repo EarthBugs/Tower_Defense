@@ -5,32 +5,43 @@ package Towers;/*
 
 public class TowerWeapon
 {
-	private float fireRange;//攻击范围
-	private float fireTimeInterval;//攻击时间间隔
-	private int fireTimer;//攻击计时器
+	private int damage;//伤害
+	private int fireRange;//攻击范围
+	private int fireTimeInterval;//攻击时间间隔
+	private int fireTimer = 0;//攻击计时器，默认为零，攻击后重设为fireTimeInterval
 	
-	protected TowerWeapon(float fireRange, float fireTimeInterval)//构造函数
+	private int fireDelay;//开火延迟，单位毫秒。用于将攻击音效与敌人受伤害同步
+	
+	public TowerWeapon(int damage, int fireRange, int fireTimeInterval, int fireDelay)//构造函数
 	{
+		this.damage = damage;
 		this.fireRange = fireRange;
 		this.fireTimeInterval = fireTimeInterval;
+		
+		this.fireDelay = fireDelay;
 	}
 	
-	public float getFireRange()
+	public synchronized void playFireSound()
+	{
+		//空函数
+	}
+	
+	public int getFireRange()
 	{
 		return fireRange;
 	}
 	
-	public void setFireRange(float fireRange)
+	public void setFireRange(int fireRange)
 	{
 		this.fireRange = fireRange;
 	}
 	
-	public float getFireTimeInterval()
+	public int getFireTimeInterval()
 	{
 		return fireTimeInterval;
 	}
 	
-	public void setFireTimeInterval(float fireTimeInterval)
+	public void setFireTimeInterval(int fireTimeInterval)
 	{
 		this.fireTimeInterval = fireTimeInterval;
 	}
@@ -40,8 +51,33 @@ public class TowerWeapon
 		return fireTimer;
 	}
 	
-	public void setFireTimer(int fireTimer)
+	public void resetFireTimer()
 	{
-		this.fireTimer = fireTimer;
+		this.fireTimer = fireTimeInterval;
+	}
+	
+	public void addFireTimer()
+	{
+		this.fireTimer++;
+	}
+	
+	public int getDamage()
+	{
+		return damage;
+	}
+	
+	public void setDamage(int damage)
+	{
+		this.damage = damage;
+	}
+	
+	public int getFireDelay()
+	{
+		return fireDelay;
+	}
+	
+	public void setFireDelay(int fireDelay)
+	{
+		this.fireDelay = fireDelay;
 	}
 }

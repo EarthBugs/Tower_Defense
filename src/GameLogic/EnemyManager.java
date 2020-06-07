@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class EnemyManager extends Thread
 {
+	private GameWindow win;
 	private GameMap map;
 	private ArrayList<Enemy> enemyList;
 	
@@ -33,7 +34,8 @@ public class EnemyManager extends Thread
 			//生成3个犀牛坦克对象
 			for(int i = 0; i < 3; i++)
 			{
-				enemyList.add(new RhinoHeavyTank(map).startController(2000));
+				if(win.getRunning())//判断游戏是否结束
+					enemyList.add(new RhinoHeavyTank(map).startController(2000));
 			}
 			
 			synchronized(this)
@@ -43,7 +45,8 @@ public class EnemyManager extends Thread
 			
 			for(int i = 0; i < 6; i++)//生成6个犀牛坦克对象
 			{
-				enemyList.add(new RhinoHeavyTank(map).startController(2000));
+				if(win.getRunning())//判断游戏是否结束
+					enemyList.add(new RhinoHeavyTank(map).startController(2000));
 			}
 			
 		}catch(IOException e)
@@ -55,10 +58,11 @@ public class EnemyManager extends Thread
 		}
 	}
 	
-	@Override
-	public synchronized void start()
+	public synchronized void start(GameWindow win)
 	{
 		System.out.println("已启动：敌人管理器");
+		
+		this.win = win;
 		
 		super.start();
 	}

@@ -50,12 +50,24 @@ public class Enemy
 		System.out.println("已构造 Enemy" + index + " " + this);
 	}
 	
+	public void damaged(int damage)//受到攻击，减少血量
+	{
+		this.hp -= damage;
+		System.out.println(this + "遭受了" + damage + "点伤害，当前hp:" + hp);
+	}
+	
 	public void paint(Graphics g)
 	{
 		g.drawImage(image, position.x - 64, position.y - 64, null);//绘制本体
 		//System.out.println("Enemy对象paint函数：  x:" + position.x + ", y:" + position.y);
 		g.setColor(Color.green);
 		g.fillRect(position.x - 26, position.y - 16, hp / 5, 4);//绘制血量条
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Enemy" + index + "(x:" + position.x + ", y:" + position.y + ")";
 	}
 	
 	public Enemy startController(int delay) throws InterruptedException

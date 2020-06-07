@@ -1,5 +1,7 @@
 package GameLogic;
 
+import Audio.Sound;
+
 import javax.swing.*;
 import java.io.IOException;
 

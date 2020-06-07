@@ -17,7 +17,7 @@ public class GameJudger
 	public void judge(int gameState)
 	{
 		window.setRunning(false);//停止所有线程中的循环
-		System.out.println("GameWindow stopped!");
+		System.out.println("##########\nYou have been defeated, GameWindow stopped!\n##########");
 		
 		if(gameState == 1)
 			JOptionPane.showMessageDialog(null, "YOU WIN！", "YOU WIN！", JOptionPane.PLAIN_MESSAGE);

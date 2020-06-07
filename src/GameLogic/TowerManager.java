@@ -43,32 +43,18 @@ public class TowerManager extends Thread
 		{
 			synchronized(this)
 			{
-				/*Iterator towerIterator = towerMap.entrySet().iterator();
-				System.out.println(towerMap.size() + "    " + towerIterator.hasNext());
-				while(towerIterator.hasNext())
-				{
-					tower.paint();
-					
-					for(int i = 0; i < enemyList.size(); i++)//遍历enemyList中的每个敌人对象
-					{
-						if(enemyList.get(i).getPosition().distance(tower.getPosition()) < tower.getTowerWeapon().getFireRange())//判断敌人对象与本对象之间的距离是否小于武器的攻击范围
-						{
-							System.out.println("塔" + tower.getPosition() + "攻击了敌人！");
-						}
-					}
-				}*/
-				
 				for (Point key : towerMap.keySet())//遍历towerMap
 				{
 					Tower tower = towerMap.get(key);
 					
-					for(int i = 0; i < enemyList.size(); i++)//为该塔对象索敌，遍历enemyList中的每个敌人对象
+					for(int i = 0; i < enemyList.size(); i++)//为该塔索敌，遍历enemyList中的每个敌人对象
 					{
 						Enemy enemy = enemyList.get(i);
 						if(enemy.getPosition().distance(tower.getPosition()) < tower.getTowerWeapon().getFireRange())//判断敌人对象与本对象之间的距离是否小于武器的攻击范围
 						{
-							System.out.println("塔" + tower.getPosition() + "攻击了敌人" + enemy + "！");
-							break;//找到第一个敌人对象之后，跳出内层的for循环
+							tower.attack(enemy);
+							//System.out.println("塔" + tower.getPosition() + "攻击了敌人" + enemy + "！");
+							break;//找到第一个敌人对象之后，跳出内层的for循环，开始为下一个塔索敌
 						}
 					}
 				}
