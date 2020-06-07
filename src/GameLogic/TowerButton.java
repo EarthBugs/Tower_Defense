@@ -111,19 +111,19 @@ public class TowerButton
 		{
 			if(i < 1 || i > 1)
 			{
-				win.add(new GridButton(new Point(72 + 144 * i, 72 + 144 * 1)));
+				win.add(new GridButton(new Point(72 + 144 * i, 72 + 144 * 2)));
 			}
 		}
 		for(int i = 0; i < 5; i++)//第四行
 		{
 			if(i < 1)
 			{
-				win.add(new GridButton(new Point(72 + 144 * i, 72 + 144 * 1)));
+				win.add(new GridButton(new Point(72 + 144 * i, 72 + 144 * 3)));
 			}
 		}
 		for(int i = 0; i < 5; i++)//第五行
 		{
-			win.add(new GridButton(new Point(72 + 144 * i, 72 + 144 * 1)));
+			win.add(new GridButton(new Point(72 + 144 * i, 72 + 144 * 4)));
 		}
 	}
 }
