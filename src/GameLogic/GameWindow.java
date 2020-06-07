@@ -4,6 +4,8 @@ package GameLogic;/*
     游戏窗口
 */
 
+import Audio.Sound;
+
 import javax.swing.*;
 import java.io.IOException;
 
@@ -21,6 +23,10 @@ public class GameWindow extends JFrame implements Runnable
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭方式
 		this.setSize(1050, 755);//设置窗口尺寸（像素）
 		this.setLocationRelativeTo(null);//设置窗口启动时位于屏幕中央
+		
+		//播放开场语音
+		Sound battleControlOnline = new Sound("src\\Audio\\战场控制上线.mp3");
+		new Sound("src\\Audio\\正在稳定战场控制.mp3", battleControlOnline).start();
 	}
 	
 	public void initializeGameMap(GameJudger gameJudger) throws IOException, InterruptedException
