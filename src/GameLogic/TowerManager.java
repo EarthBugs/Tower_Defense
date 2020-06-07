@@ -15,7 +15,6 @@ import java.util.HashMap;
 public class TowerManager extends Thread
 {
 	private GameWindow win;
-	private GameMap map;
 	
 	private HashMap<Point, Tower> towerMap;
 	
@@ -53,7 +52,6 @@ public class TowerManager extends Thread
 						if(enemy.getPosition().distance(tower.getPosition()) < tower.getTowerWeapon().getFireRange())//判断敌人对象与本对象之间的距离是否小于武器的攻击范围
 						{
 							tower.attack(enemy);
-							//System.out.println("塔" + tower.getPosition() + "攻击了敌人" + enemy + "！");
 							break;//找到第一个敌人对象之后，跳出内层的for循环，开始为下一个塔索敌
 						}
 					}
@@ -76,7 +74,7 @@ public class TowerManager extends Thread
 		
 		this.win = win;
 		
-		towerMap.put(new Point(144 + 72, 144 + 72), new TeslaCoil(new Point(144 + 72, 144 + 72)));
+		towerMap.put(new Point(72 + 144 * 2, 72 + 144 * 2), new TeslaCoil(new Point(72 + 144 * 2, 72 + 144 * 2)));
 		
 		super.start();
 	}
