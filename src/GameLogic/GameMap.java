@@ -56,6 +56,7 @@ public class GameMap extends JPanel
 		this.menuLabel = new JLabel(menu);
 		this.menuLabel.setSize(360, 720);
 		this.menuLabel.setLocation(700, 0);
+		this.add(menuLabel);//绘制menu
 		
 		//初始化路径点。60+120*n即第n行/列的行/列中心，地图共5列5行。当前地图形状：
 		//┏━━┛
@@ -76,17 +77,13 @@ public class GameMap extends JPanel
 	{
 		super.paint(g);
 		
-		//设置金钱显示器的参数并添加进JPanel
-		this.moneyLabel = new JLabel(String.valueOf(money));
-		this.moneyLabel.setSize(64, 16);
-		this.moneyLabel.setLocation(865, 11);
-		this.moneyLabel.setForeground(Color.yellow);
-		this.add(moneyLabel);
-		this.add(menuLabel);//绘制menu
+		g.setColor(Color.yellow);
+		g.drawString(String.valueOf(money), 865, 24);//绘制金钱显示器
 		
+		g.setColor(Color.black);
 		paintGrid(g);//绘制网格
 		
-		for (Point key : towerMap.keySet())//遍历towerMap中的每一个对象并执行绘制
+		for(Point key : towerMap.keySet())//遍历towerMap中的每一个对象并执行绘制
 		{
 			Tower tower = towerMap.get(key);
 			
