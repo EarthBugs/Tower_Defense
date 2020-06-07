@@ -32,7 +32,7 @@ public class TowerButton
 			this.setSize(144, 144);
 			this.setBorderPainted(false);//不打印边框
 			this.setFocusPainted(false);//除去焦点的框
-			//this.setContentAreaFilled(false);//除去默认的背景填充
+			this.setContentAreaFilled(false);//除去默认的背景填充
 			this.addActionListener//添加按钮监听器
 					(new ActionListener()
 					{
