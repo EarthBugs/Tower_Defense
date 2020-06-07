@@ -52,7 +52,7 @@ public class EnemyController extends Thread
 		}
 	}
 	
-	public void startController(int delay) throws InterruptedException
+	public void startController(int delay)
 	{
 		synchronized(this)
 		{
