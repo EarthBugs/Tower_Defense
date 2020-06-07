@@ -27,17 +27,15 @@ public class Enemy
 	private final String imageURL;//图像路径
 	public EnemyController enemyController;//该敌人对象的控制器，控制敌人移动
 	
-	public Enemy(GameMap map, float velocity, int hp, int firePower, char type, char armor, String imageURL) throws IOException
+	public Enemy(GameMap map, float velocity, int hp, int bounty, int firePower, char type, char armor, String imageURL) throws IOException
 	{
 		index++;//序号自加
 		
-		//设置初始的坐标。此时不能直接this.position = map.getWayPoint()[0]，否则后续改变本对象的positon的时候wayPoint[0]也会跟着改变
-		this.position = new Point();
-		this.position.x = map.getWayPoint()[0].x;
-		this.position.y = map.getWayPoint()[0].y;
+		this.position = new Point(-2048, - 2048);
 		
 		this.velocity = velocity;
 		this.hp = hp;
+		this.bounty = bounty;
 		this.firePower = firePower;
 		this.type = type;
 		this.armor = armor;
@@ -130,5 +128,10 @@ public class Enemy
 	public static int getIndex()
 	{
 		return index;
+	}
+	
+	public int getBounty()
+	{
+		return bounty;
 	}
 }

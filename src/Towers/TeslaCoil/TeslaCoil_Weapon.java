@@ -19,7 +19,7 @@ public class TeslaCoil_Weapon extends TowerWeapon
 	@Override
 	public synchronized void playFireSound()//播放开火的音效
 	{
-		System.out.println("已播放开火音效：TeslaCoil");
+		//System.out.println("已播放开火音效：TeslaCoil");
 		
 		long randomNum = System.currentTimeMillis();
 		int intRan = (int) (randomNum % 2);
