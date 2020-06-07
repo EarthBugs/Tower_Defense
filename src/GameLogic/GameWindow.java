@@ -37,7 +37,7 @@ public class GameWindow extends JFrame implements Runnable
 	{
 		this.gameJudger = gameJudger;
 		
-		/*//添加提示文字
+		//添加提示文字
 		JLabel notice0 = new JLabel("正在稳定战场控制系统……");
 		notice0.setFont(new Font(Font.DIALOG, 1, 32));
 		notice0.setBounds(100, 100, 1024, 32);
@@ -52,7 +52,7 @@ public class GameWindow extends JFrame implements Runnable
 		}catch(InterruptedException e)
 		{
 			e.printStackTrace();
-		}*/
+		}
 		
 		new BGM(this);//创建BGM播放线程
 		
